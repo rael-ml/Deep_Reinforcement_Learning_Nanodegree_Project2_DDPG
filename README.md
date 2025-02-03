@@ -47,5 +47,5 @@ Once downloaded, unzip the file and place it in the project folder.
 
 3. After installation, restart the kernel in your Jupyter Notebook environment.
 
-4. Open Navigation.ipynb to begin running the DQN agent on the Banana environment.
+4. Open Navigation.ipynb to begin running the DDPG agent on the Reacher environment.
 
