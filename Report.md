@@ -4,6 +4,45 @@
 
 Reinforcement Learning Methods can be Value Based or Policy based. The first one aims to estimate the expected sum of rewards obtained by taking an action given a state. In a value-based deep reinforcement learning, the agent chooses the action with be best Q-value (expected sum of rewards). In Policy bases methods, the neural network predictd directly the action that must be taken given a state. Deep Deterministic Policy Gradient is a powerful reinforcement learning algorithm that has an Action Network (Policy Based) and an Critic Network (Value based), so in this way, it directly predicts that action through the Actor Network but that action is evalueated by the Critic.  
 
+DDPG is a off-policy algorithm, which means that the policy learned is not tha same as the policy in wich it was trained. DDPG is suitable for a continuos action space.
+
+The chosen action is based on the highest Q-value, calculated using the **Bellman equation**:
+
+```math
+Q(s,a) \gets Q(s,a) + \alpha \left[ r + \gamma \max_{a'} Q(s',a') - Q(s,a) \right]
+```
+
+### Where:
+- `s`: Current state;
+- `a`: Action taken;
+- `r`: Reward received;
+- `s'`: New state reached after the action;
+- `\alpha`: Learning rate;
+- `\gamma`: Discount factor, weighting future rewards.
+
+The Q-value represents the expected future reward for taking action `a` in state `s`. These values are stored in a table that maps states to possible actions. However, the main disadvantage of Q-Learning is its **lack of scalability**, as it requires knowledge of all possible states in the environment.
+
+
+## Improvements to the Neural Networks
+
+Despite its efficiency, the simple neural network model is prone to instability. To address this, several improvements have been introduced:
+
+### 1. Target Neural Network
+In the simple network, updating both the neural network weights and the output values simultaneously leads to instability. A **target network** is used to solve this problem:
+
+- The target network has the same architecture as the main network but with weights "frozen" for a few episodes.
+- The main network updates its weights based on the outputs provided by the target network.
+- Periodically, the weights of the target network are synchronized with those of the main network, improving stability.
+- The Actor has a local and a target network and the Critic also has a local and a taget network.
+
+### 2. Experience Replay Buffer
+To prevent the network from overfitting to sequential patterns in the data, transitions `(s, a, r, s')` are stored in an **experience buffer**:
+
+- Transitions are stored in the buffer.
+- During training, random samples from the buffer are used, promoting diversity in the training data and improving efficiency.
+
+### 3. Ornstein–Uhlenbeck process
+The Ornsteiun-Uhlenbeck noiise is added to the output of the network to act as a exploration term. This kinf of noise is suitable to continuos action spaces because it is time-correlated, so it is expected that the model will not suggest a action with a great difference than the acton before.
 
 
 ## Experiments
@@ -43,11 +82,18 @@ This was a very simple analysis of the hyperparameters, providing only a prelimi
 
 Below are the reward plots observed during training for four different experimental setups. These plots illustrate the performance improvements across episodes.
 
+<img src="rewards.png" alt="Learning Print" width="800">
+
 <img src="rewardsplot.png" alt="Learning Plot" width="800">
 
 
 ## Ideas for Future Work
-As suggestions for future work, in addition to a more advanced study of hyperparameters, we propose applying more recent methodologies in Deep Q-Networks (DQNs) to assess potential performance improvements. These could include prioritized replay buffer, double-DQN, or DQN Rainbow. Another possibility is to explore policy gradient methods, such as Proximal Policy Optimization (PPO).
+For future improvements, beyond a more in-depth study of hyperparameters, we suggest exploring more stable methodologies such as:  
+- **Trust Region Policy Optimization (TRPO)**  
+- **Truncated Natural Policy Gradient (TNPG)**  
+- **Distributed Distributional Deep Deterministic Policy Gradient (D4PG)** (a state-of-the-art approach)  
+
+Additionally, an interesting direction for future work would be comparing the results obtained in this single-agent scenario with the multi-agent Reacher environment to evaluate performance differences.  
 
 
 
