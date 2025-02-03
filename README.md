@@ -5,7 +5,7 @@ In this project, the goal is to train an agent using Deep Q-Networks (DQN) to na
 
 A sample of the environment can be seen below:
 
-![Banana Environment](https://video.udacity-data.com/topher/2018/June/5b1ab4b0_banana/banana.gif)
+![Reacher Environment](https://video.udacity-data.com/topher/2018/June/5b1ea778_reacher/reacher.gif)
 
 ## Problem Description
 The agent interacts with a virtual environment, where the state space consists of 37 dimensions, including the agent's velocity and sensor inputs from ray-based vision. The agent must make decisions based on these observations. The action space consists of four discrete actions:
