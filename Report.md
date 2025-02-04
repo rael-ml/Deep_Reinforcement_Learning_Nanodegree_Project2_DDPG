@@ -86,7 +86,7 @@ The table below summarizes the hyperparamters of the DDPG agent that solved the 
 
 | Parameter               | Experiment 1    |
 |-------------------------|-----------|
-| BUFFER_SIZE            | 100,00   | 
+| BUFFER_SIZE            | 10,000   | 
 | BATCH_SIZE             | 128        | 
 | GAMMA                  | 0.99      | 
 | TAU                    | 1.00E-03  | 
