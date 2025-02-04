@@ -2,18 +2,18 @@
 
 ## Deep Deterministic Policy Gradient (DDPG) Overview
 
-Reinforcement Learning Methods can be Value Based or Policy based. The first one aims to estimate the expected sum of rewards obtained by taking an action given a state. In a value-based deep reinforcement learning, the agent chooses the action with be best Q-value (expected sum of rewards). In Policy bases methods, the neural network predictd directly the action that must be taken given a state. Deep Deterministic Policy Gradient is a powerful reinforcement learning algorithm that has an Action Network (Policy Based) and an Critic Network (Value based), so in this way, it directly predicts that action through the Actor Network but that action is evalueated by the Critic.  
+Reinforcement Learning Methods can be Value Based or Policy based. The first one aims to estimate the expected sum of rewards obtained by taking an action given a state. In a value-based deep reinforcement learning, the agent chooses the action with be best Q-value (expected sum of rewards). In Policy bases methods, the neural network predictd directly the action that must be taken given a state. Deep Deterministic Policy Gradient is a powerful reinforcement learning algorithm that has an Action Network (Policy Based) and an Critic Network (Value based), so in this way, it directly predicts the action through the Actor Network but that action is evalueated by the Critic.  
 
 DDPG is a off-policy algorithm, which means that the policy learned is not tha same as the policy in wich it was trained. DDPG is suitable for a continuos action space.
 
-In this algorithm, in each step, the agent save the (state, action, reward, new state) tuple in the experience buffer and if the experience buffer is greater than th ebatch size, the agent learns from that experience. The learing process of de DDPG consists of a Actor Neural Network and a Critic Network. The Actor has the state as input and the chosen action as the output. The Critic also has the state as input but has the expectated reward as output, as a way to measure the quality of the action taken. To stabilize training, both actor and critcs have a target network, with the same architecture and in each new step the target networks are soft updated. 
+In this algorithm, in each step, the agent save the (state, action, reward, new state) tuple in the experience buffer and if the experience buffer is greater than the batch size, the agent learns from that experience. The learing process of de DDPG consists of a Actor Neural Network and a Critic Network. The Actor has the state as input and the action as the output. The Critic also has the state as input but has the expectated reward as output, as a way to measure the quality of the action taken. To stabilize training, both actor and critcs have a target network, with the same architecture and in each new step the target networks are soft updated. 
 
 The Critic error is measuered by the difference between Q-value outputted by the local target and the Belmann Equation utilizing the Q-value of the target network. This makes sense because it is expected that the local network learns to estimate de expected return of the future actions (which is calculated by the bellmann equation). The Actor error is measured by passing the state predicted by the local actor to the local critic (in order to evaluated if it was a good action). 
 
 **Bellman equation** to update the critic network:
 
 ```math
-Q_target = r + (\gamma * Q_targets_next * (1 - dones))
+Q_{target} = r + (\gamma * Q_{targets_next} * (1 - dones))
 ```
 
 
