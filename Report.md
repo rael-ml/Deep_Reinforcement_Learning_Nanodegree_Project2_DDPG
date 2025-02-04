@@ -127,7 +127,6 @@ This was the **only combination of hyperparameters** that successfully solved th
 ✅ With a **slower learning rate**, the algorithm was able to **converge and solve the environment in 340 episodes**.  
 
 
-### Conclusion  
 Through extensive experimentation, we found that **a well-balanced network architecture and a carefully tuned learning rate** were essential for solving the environment. This was a very simple analysis of the hyperparameters, providing only a preliminary understanding of their behavior. A more detailed investigation, involving extensive exploration of various hyperparameters, repeated experiments, collection of averages, and hypothesis testing, would be necessary to obtain clearer insights into the impact of hyperparameter tuning.
 
 ### Reward Plots During Training Across Four Experiments
