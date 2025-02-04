@@ -59,7 +59,7 @@ By optimizing the Actor network to maximize the Critic’s evaluation, the agent
 
 
 
-## Improvements to the Neural Networks
+### Improvements to the Neural Networks
 
 Despite its efficiency, the simple neural network model is prone to instability. To address this, several improvements have been introduced in the DDPG:
 
