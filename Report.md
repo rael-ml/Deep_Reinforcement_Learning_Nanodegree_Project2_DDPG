@@ -34,9 +34,10 @@ The Critic's error is measured as the difference between:
 - The **Q-value** outputted by the local Critic network.  
 - The **Bellman equation** applied to the target network's Q-value:  
 
-\[
-Q_{\text{target}} = r + (\gamma \cdot Q_{\text{target, next}} \cdot (1 - \text{done}))
-\]
+'''
+math
+Q_{target} = r + (\gamma * Q_{target\_next} *(1 - done))
+'''
 
 This ensures that the local Critic network learns to estimate future expected returns correctly.  
 
