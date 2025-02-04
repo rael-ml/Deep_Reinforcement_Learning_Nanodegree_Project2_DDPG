@@ -38,14 +38,14 @@ $$
 Q_{\text{target}} = r + (\gamma \cdot Q_{\text{target, next}} \cdot (1 - \text{done}))
 $$
 
-- **\( Q_{\text{target}} \)** → The **target Q-value**, representing the estimated total reward for a given state-action pair.  
-- **\( r \)** → The **immediate reward** received after taking an action.  
-- **\( \gamma \) (gamma)** → The **discount factor** (\( 0 < \gamma \leq 1 \)), which determines how much future rewards influence the current value.  
-- **\( Q_{\text{target, next}} \)** → The **Q-value of the next state**, estimated by the **target Critic network**.  
-- **\( \text{done} \)** → A **binary indicator** (0 or 1) for whether the episode has ended:  
-  - `done = 1` → The episode is over (future rewards are ignored).  
-  - `done = 0` → The episode is ongoing (future rewards are considered).  
-- **\( (1 - \text{done}) \)** → Ensures that if the episode has ended, the **next state's Q-value is ignored** (since there are no future actions).
+- **$Q_{\text{target}}$** → The **target Q-value**, representing the estimated total reward for a given state-action pair.  
+- **$r$** → The **immediate reward** received after taking an action.  
+- **$\gamma$** (gamma) → The **discount factor** ($0 < \gamma \leq 1$), which determines how much future rewards influence the current value.  
+- **$Q_{\text{target, next}}$** → The **Q-value of the next state**, estimated by the **target Critic network**.  
+- **$\text{done}$** → A **binary indicator** (0 or 1) for whether the episode has ended:  
+  - **done = 1** → The episode is over (future rewards are ignored).  
+  - **done = 0** → The episode is ongoing (future rewards are considered).  
+- **$(1 - \text{done})$** → Ensures that if the episode has ended, the **next state's Q-value is ignored** (since there are no future actions).  
 
 This ensures that the local Critic network learns to estimate future expected returns correctly.  
 
@@ -63,7 +63,7 @@ By optimizing the Actor network to maximize the Critic’s evaluation, the agent
 
 Despite its efficiency, the simple neural network model is prone to instability. To address this, several improvements have been introduced in the DDPG:
 
-### 1. Target Neural Network
+#### 1. Target Neural Network
 In the simple network, updating both the neural network weights and the output values simultaneously leads to instability. A **target network** is used to solve this problem:
 
 - The target network has the same architecture as the main network but with weights "frozen" for a few episodes.
@@ -71,13 +71,13 @@ In the simple network, updating both the neural network weights and the output v
 - Periodically, the weights of the target network are synchronized with those of the main network, improving stability.
 - The Actor has a local and a target network and the Critic also has a local and a taget network.
 
-### 2. Experience Replay Buffer
+#### 2. Experience Replay Buffer
 To prevent the network from overfitting to sequential patterns in the data, transitions `(s, a, r, s')` are stored in an **experience buffer**:
 
 - Transitions are stored in the buffer.
 - During training, random samples from the buffer are used, promoting diversity in the training data and improving efficiency.
 
-### 3. Ornstein–Uhlenbeck process
+#### 3. Ornstein–Uhlenbeck process
 Ornstein-Uhlenbeck (OU) noise is added to the network's output to serve as an exploration term. This type of noise is well-suited for continuous action spaces because it is time-correlated, meaning that consecutive actions remain similar rather than changing abruptly. As a result, the model is less likely to propose actions that differ drastically from previous ones, leading to smoother exploration.
 
 
