@@ -2,20 +2,50 @@
 
 ## Deep Deterministic Policy Gradient (DDPG) Overview
 
-Reinforcement Learning Methods can be Value Based or Policy based. The first one aims to estimate the expected sum of rewards obtained by taking an action given a state. In a value-based deep reinforcement learning, the agent chooses the action with be best Q-value (expected sum of rewards). In Policy bases methods, the neural network predictd directly the action that must be taken given a state. Deep Deterministic Policy Gradient is a powerful reinforcement learning algorithm that has an Action Network (Policy Based) and an Critic Network (Value based), so in this way, it directly predicts the action through the Actor Network but that action is evalueated by the Critic.  
+Reinforcement Learning (RL) methods can be categorized into **value-based** and **policy-based** approaches:  
+- **Value-based methods** estimate the expected sum of rewards obtained by taking an action in a given state. In deep reinforcement learning, an agent selects the action with the highest **Q-value** (expected cumulative reward).  
+- **Policy-based methods** directly predict the best action to take given a state, using a neural network.  
 
-DDPG is a off-policy algorithm, which means that the policy learned is not tha same as the policy in wich it was trained. DDPG is suitable for a continuos action space.
+**Deep Deterministic Policy Gradient (DDPG)** is a powerful RL algorithm that combines both approaches. It consists of:  
+- **Actor Network (Policy-Based):** Predicts the best action given the current state.  
+- **Critic Network (Value-Based):** Evaluates the predicted action to determine its quality.  
 
-In this algorithm, in each step, the agent save the (state, action, reward, new state) tuple in the experience buffer and if the experience buffer is greater than the batch size, the agent learns from that experience. The learing process of de DDPG consists of a Actor Neural Network and a Critic Network. The Actor has the state as input and the action as the output. The Critic also has the state as input but has the expectated reward as output, as a way to measure the quality of the action taken. To stabilize training, both actor and critcs have a target network, with the same architecture and in each new step the target networks are soft updated. 
+By integrating these networks, DDPG enables effective learning in **continuous action spaces**.  
 
-The Critic error is measuered by the difference between Q-value outputted by the local target and the Belmann Equation utilizing the Q-value of the target network. This makes sense because it is expected that the local network learns to estimate de expected return of the future actions (which is calculated by the bellmann equation). The Actor error is measured by passing the state predicted by the local actor to the local critic (in order to evaluated if it was a good action). 
+## Off-Policy Learning  
 
-**Bellman equation** to update the critic network:
+DDPG is an **off-policy** algorithm, meaning the learned policy differs from the one used during training. This allows for more efficient experience reuse.  
 
-```math
-Q_{target} = r + (\gamma * Q_{targets\_next} * (1 - dones))
-```
+## Learning Process  
 
+At each step, the agent:  
+1. **Stores** the `(state, action, reward, next_state)` tuple in the **experience buffer**.  
+2. **Samples** a batch from the buffer (once it contains enough experiences).  
+3. **Learns** by updating its networks:  
+   - The **Actor Network** takes the current state as input and outputs an action.  
+   - The **Critic Network** takes the state and action as input and estimates the expected reward.  
+
+To stabilize training, both networks have **target networks** (copies of the original networks), which are **soft-updated** at each step to prevent instability.  
+
+## Training the Networks  
+
+### **Critic Network Update**  
+The Critic's error is measured as the difference between:  
+- The **Q-value** outputted by the local Critic network.  
+- The **Bellman equation** applied to the target network's Q-value:  
+
+\[
+Q_{\text{target}} = r + (\gamma \cdot Q_{\text{target, next}} \cdot (1 - \text{done}))
+\]
+
+This ensures that the local Critic network learns to estimate future expected returns correctly.  
+
+### **Actor Network Update**  
+The Actor’s error is measured by:  
+1. Passing the predicted action (from the local Actor network) to the local Critic.  
+2. Evaluating whether the Critic assigns a high **Q-value** to the action.  
+
+By optimizing the Actor network to maximize the Critic’s evaluation, the agent learns to take better actions over time.  
 
 ## Improvements to the Neural Networks
 
