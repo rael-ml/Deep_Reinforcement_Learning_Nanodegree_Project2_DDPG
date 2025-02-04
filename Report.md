@@ -82,7 +82,7 @@ Ornstein-Uhlenbeck (OU) noise is added to the network's output to serve as an ex
 
 
 ## Hyperparameters and Networks Architecture
-The table below summarizes the results of multiple training runs with different hyperparameters:
+The table below summarizes the hyperparamters of the DDPG agent that solved the environment.
 
 | Parameter               | Experiment 1    |
 |-------------------------|-----------|
@@ -97,17 +97,42 @@ The table below summarizes the results of multiple training runs with different 
 | fc2_units              | 64       | 
 
 
-In the first three experiments, we used a neural network with an architecture of 37 (state_size) x 256 x 156 x 4 (action_size).
+### Actor and Critic Architectures  
 
-Experiment 1: The agent successfully solved the problem in just 537 episodes.
+The **Actor network** was structured as follows:  
+33 (state size) → 128 → 64 → 4 (action size)
 
-Experiment 2: We reduced the gamma parameter (which controls how much future rewards are valued). As a result, the agent solved the environment in 503 episodes, a slight improvement compared to the first experiment.
+The **Critic network** followed a similar design:  
+33 → 128 → 64 → 1
 
-Experiment 3: The batch size (number of samples drawn from the replay buffer for training) was doubled. With more data to train on, the network took 611 episodes to solve the environment, demonstrating that a larger batch size can sometimes slow convergence
+This was the **only combination of hyperparameters** that successfully solved the environment.  
 
-Experiment 4: The size of the first hidden layer was reduced to 128, which resulted in the environment being solved in 545 episodes. This showed that it is possible to reduce the network's complexity without significantly affecting its performance
+---
 
-Experiment 5: The learning rate was increased to 5e^-3, but the network failed to improve. It stagnated at an average reward of 10.39 and was unable to solve the environment.
+### Hyperparameter Experiments and Observations  
+
+#### 1️⃣ Batch Size  
+- Adjusting `batch_size` had **little impact** on performance.  
+
+#### 2️⃣ Smaller Networks  
+- Networks with **fewer neurons** (e.g., `64 × 32`) in the hidden layers **failed to solve** the environment.  
+
+#### 3️⃣ Higher Learning Rates  
+- Increasing the learning rate for the **Actor** and **Critic** (e.g., `1.00E-03` or `5.00E-03`) **also failed** to solve the environment.  
+
+#### 4️⃣ Noise Reduction Strategy  
+- Implemented a **decaying noise process** to encourage **exploration early** in training while shifting towards **exploitation later**.  
+- This approach **improved performance** but was **not sufficient** to solve the environment.  
+
+#### 5️⃣ The Key Breakthrough  
+✅ The **critical change** that enabled successful training was **reducing the learning rate** to **1.00E-04**.  
+✅ With a **slower learning rate**, the algorithm was able to **converge and solve the environment in 340 episodes**.  
+
+---
+
+### Conclusion  
+Through extensive experimentation, we found that **a well-balanced network architecture and a carefully tuned learning rate** were essential for solving the environment.  
+
 
 This was a very simple analysis of the hyperparameters, providing only a preliminary understanding of their behavior. A more detailed investigation, involving extensive exploration of various hyperparameters, repeated experiments, collection of averages, and hypothesis testing, would be necessary to obtain clearer insights into the impact of hyperparameter tuning.
 
