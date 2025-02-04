@@ -6,26 +6,20 @@ Reinforcement Learning Methods can be Value Based or Policy based. The first one
 
 DDPG is a off-policy algorithm, which means that the policy learned is not tha same as the policy in wich it was trained. DDPG is suitable for a continuos action space.
 
-The chosen action is based on the highest Q-value, calculated using the **Bellman equation**:
+In this algorithm, in each step, the agent save the (state, action, reward, new state) tuple in the experience buffer and if the experience buffer is greater than th ebatch size, the agent learns from that experience. The learing process of de DDPG consists of a Actor Neural Network and a Critic Network. The Actor has the state as input and the chosen action as the output. The Critic also has the state as input but has the expectated reward as output, as a way to measure the quality of the action taken. To stabilize training, both actor and critcs have a target network, with the same architecture and in each new step the target networks are soft updated. 
+
+The Critic error is measuered by the difference between Q-value outputted by the local target and the Belmann Equation utilizing the Q-value of the target network. This makes sense because it is expected that the local network learns to estimate de expected return of the future actions (which is calculated by the bellmann equation). The Actor error is measured by passing the state predicted by the local actor to the local critic (in order to evaluated if it was a good action). 
+
+**Bellman equation** to update the critic network:
 
 ```math
-Q(s,a) \gets Q(s,a) + \alpha \left[ r + \gamma \max_{a'} Q(s',a') - Q(s,a) \right]
+Q_target = r + (\gamma * Q_targets_next * (1 - dones))
 ```
-
-### Where:
-- `s`: Current state;
-- `a`: Action taken;
-- `r`: Reward received;
-- `s'`: New state reached after the action;
-- `\alpha`: Learning rate;
-- `\gamma`: Discount factor, weighting future rewards.
-
-The Q-value represents the expected future reward for taking action `a` in state `s`. These values are stored in a table that maps states to possible actions. However, the main disadvantage of Q-Learning is its **lack of scalability**, as it requires knowledge of all possible states in the environment.
 
 
 ## Improvements to the Neural Networks
 
-Despite its efficiency, the simple neural network model is prone to instability. To address this, several improvements have been introduced:
+Despite its efficiency, the simple neural network model is prone to instability. To address this, several improvements have been introduced in the DDPG:
 
 ### 1. Target Neural Network
 In the simple network, updating both the neural network weights and the output values simultaneously leads to instability. A **target network** is used to solve this problem:
@@ -42,7 +36,7 @@ To prevent the network from overfitting to sequential patterns in the data, tran
 - During training, random samples from the buffer are used, promoting diversity in the training data and improving efficiency.
 
 ### 3. Ornstein–Uhlenbeck process
-The Ornsteiun-Uhlenbeck noiise is added to the output of the network to act as a exploration term. This kinf of noise is suitable to continuos action spaces because it is time-correlated, so it is expected that the model will not suggest a action with a great difference than the acton before.
+The Ornsteiun-Uhlenbeck noise is added to the output of the network to act as a exploration term. This kind of noise is suitable to continuos action spaces because it is time-correlated, so it is expected that the model will not suggest a action with a great difference than the acton before.
 
 
 ## Experiments
@@ -82,7 +76,7 @@ This was a very simple analysis of the hyperparameters, providing only a prelimi
 
 Below are the reward plots observed during training for four different experimental setups. These plots illustrate the performance improvements across episodes.
 
-<img src="rewards.png" alt="Learning Print" width="800">
+<img src="rewards.png" alt="Learning Print" width="400">
 
 <img src="rewardsplot.png" alt="Learning Plot" width="800">
 
