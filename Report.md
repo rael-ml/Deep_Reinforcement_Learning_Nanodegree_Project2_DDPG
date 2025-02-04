@@ -146,7 +146,7 @@ For future improvements, beyond a more in-depth study of hyperparameters, we sug
 - **Truncated Natural Policy Gradient (TNPG)**  
 - **Distributed Distributional Deep Deterministic Policy Gradient (D4PG)** (a state-of-the-art approach)  
 
-Additionally, an interesting direction for future work would be comparing the results obtained in this single-agent scenario with the multi-agent Reacher environment to evaluate performance differences.  
+Additionally, an interesting direction for future work would be comparing the results obtained in this single-agent scenario with the parallel-agents Reacher environment to evaluate performance differences.  
 
 
 
