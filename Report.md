@@ -13,7 +13,7 @@ The Critic error is measuered by the difference between Q-value outputted by the
 **Bellman equation** to update the critic network:
 
 ```math
-Q_{target} = r + (\gamma * Q_{targets_next} * (1 - dones))
+Q_{target} = r + (\gamma * Q_{targets\_next} * (1 - dones))
 ```
 
 
