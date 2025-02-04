@@ -107,8 +107,6 @@ The **Critic network** followed a similar design:
 
 This was the **only combination of hyperparameters** that successfully solved the environment.  
 
----
-
 ### Hyperparameter Experiments and Observations  
 
 #### 1️⃣ Batch Size  
@@ -128,21 +126,19 @@ This was the **only combination of hyperparameters** that successfully solved th
 ✅ The **critical change** that enabled successful training was **reducing the learning rate** to **1.00E-04**.  
 ✅ With a **slower learning rate**, the algorithm was able to **converge and solve the environment in 340 episodes**.  
 
----
 
 ### Conclusion  
-Through extensive experimentation, we found that **a well-balanced network architecture and a carefully tuned learning rate** were essential for solving the environment.  
-
-
-This was a very simple analysis of the hyperparameters, providing only a preliminary understanding of their behavior. A more detailed investigation, involving extensive exploration of various hyperparameters, repeated experiments, collection of averages, and hypothesis testing, would be necessary to obtain clearer insights into the impact of hyperparameter tuning.
+Through extensive experimentation, we found that **a well-balanced network architecture and a carefully tuned learning rate** were essential for solving the environment. This was a very simple analysis of the hyperparameters, providing only a preliminary understanding of their behavior. A more detailed investigation, involving extensive exploration of various hyperparameters, repeated experiments, collection of averages, and hypothesis testing, would be necessary to obtain clearer insights into the impact of hyperparameter tuning.
 
 ### Reward Plots During Training Across Four Experiments
 
-Below are the reward plots observed during training for four different experimental setups. These plots illustrate the performance improvements across episodes.
+The environment was successfully solved after 340 episodes, as shown in the figure below:
 
-<img src="rewards.png" alt="Learning Print" width="400">
+<img src="rewards.png" alt="Learning Progress" width="400">
 
-<img src="rewardsplot.png" alt="Learning Plot" width="800">
+The following reward plot illustrates the performance improvements across episodes. This plot highlights how the agent's performance evolved during training.
+
+<img src="rewardsplot.png" alt="Training Reward Plot" width="800">
 
 
 ## Ideas for Future Work
