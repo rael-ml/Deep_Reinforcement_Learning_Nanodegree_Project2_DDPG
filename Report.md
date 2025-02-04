@@ -12,11 +12,11 @@ Reinforcement Learning (RL) methods can be categorized into **value-based** and 
 
 By integrating these networks, DDPG enables effective learning in **continuous action spaces**.  
 
-## Off-Policy Learning  
+### Off-Policy Learning  
 
 DDPG is an **off-policy** algorithm, meaning the learned policy differs from the one used during training. This allows for more efficient experience reuse.  
 
-## Learning Process  
+### Learning Process  
 
 At each step, the agent:  
 1. **Stores** the `(state, action, reward, next_state)` tuple in the **experience buffer**.  
@@ -27,7 +27,7 @@ At each step, the agent:
 
 To stabilize training, both networks have **target networks** (copies of the original networks), which are **soft-updated** at each step to prevent instability.  
 
-## Training the Networks  
+### Training the Networks  
 
 ### **Critic Network Update**  
 The Critic's error is measured as the difference between:  
@@ -38,6 +38,15 @@ $$
 Q_{\text{target}} = r + (\gamma \cdot Q_{\text{target, next}} \cdot (1 - \text{done}))
 $$
 
+- **\( Q_{\text{target}} \)** → The **target Q-value**, representing the estimated total reward for a given state-action pair.  
+- **\( r \)** → The **immediate reward** received after taking an action.  
+- **\( \gamma \) (gamma)** → The **discount factor** (\( 0 < \gamma \leq 1 \)), which determines how much future rewards influence the current value.  
+- **\( Q_{\text{target, next}} \)** → The **Q-value of the next state**, estimated by the **target Critic network**.  
+- **\( \text{done} \)** → A **binary indicator** (0 or 1) for whether the episode has ended:  
+  - `done = 1` → The episode is over (future rewards are ignored).  
+  - `done = 0` → The episode is ongoing (future rewards are considered).  
+- **\( (1 - \text{done}) \)** → Ensures that if the episode has ended, the **next state's Q-value is ignored** (since there are no future actions).
+
 This ensures that the local Critic network learns to estimate future expected returns correctly.  
 
 ### **Actor Network Update**  
@@ -46,6 +55,9 @@ The Actor’s error is measured by:
 2. Evaluating whether the Critic assigns a high **Q-value** to the action.  
 
 By optimizing the Actor network to maximize the Critic’s evaluation, the agent learns to take better actions over time.  
+
+
+
 
 ## Improvements to the Neural Networks
 
@@ -66,7 +78,7 @@ To prevent the network from overfitting to sequential patterns in the data, tran
 - During training, random samples from the buffer are used, promoting diversity in the training data and improving efficiency.
 
 ### 3. Ornstein–Uhlenbeck process
-The Ornsteiun-Uhlenbeck noise is added to the output of the network to act as a exploration term. This kind of noise is suitable to continuos action spaces because it is time-correlated, so it is expected that the model will not suggest a action with a great difference than the acton before.
+Ornstein-Uhlenbeck (OU) noise is added to the network's output to serve as an exploration term. This type of noise is well-suited for continuous action spaces because it is time-correlated, meaning that consecutive actions remain similar rather than changing abruptly. As a result, the model is less likely to propose actions that differ drastically from previous ones, leading to smoother exploration.
 
 
 ## Experiments
