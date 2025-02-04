@@ -29,7 +29,7 @@ To stabilize training, both networks have **target networks** (copies of the ori
 
 ### Training the Networks  
 
-### **Critic Network Update**  
+#### **Critic Network Update**  
 The Critic's error is measured as the difference between:  
 - The **Q-value** outputted by the local Critic network.  
 - The **Bellman equation** applied to the target network's Q-value:  
@@ -49,7 +49,7 @@ $$
 
 This ensures that the local Critic network learns to estimate future expected returns correctly.  
 
-### **Actor Network Update**  
+#### **Actor Network Update**  
 The Actor’s error is measured by:  
 1. Passing the predicted action (from the local Actor network) to the local Critic.  
 2. Evaluating whether the Critic assigns a high **Q-value** to the action.  
