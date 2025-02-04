@@ -81,23 +81,20 @@ To prevent the network from overfitting to sequential patterns in the data, tran
 Ornstein-Uhlenbeck (OU) noise is added to the network's output to serve as an exploration term. This type of noise is well-suited for continuous action spaces because it is time-correlated, meaning that consecutive actions remain similar rather than changing abruptly. As a result, the model is less likely to propose actions that differ drastically from previous ones, leading to smoother exploration.
 
 
-## Experiments
+## Hyperparameters and Networks Architecture
 The table below summarizes the results of multiple training runs with different hyperparameters:
 
-| Parameter               | Experiment 1     | Experiment 2     | Experiment 3    | Experiment 4    | Experiment 5        |
-|-------------------------|-----------|-----------|-----------|-----------|---------------|
-| BUFFER_SIZE            | 100,000   | 100,000   | 100,000   | 100,000   | 100,000       |
-| BATCH_SIZE             | 64        | 64        | 128       | 64        | 64            |
-| GAMMA                  | 0.99      | 0.9       | 0.9       | 0.9       | 0.9           |
-| TAU                    | 1.00E-03  | 1.00E-03  | 1.00E-03  | 1.00E-03  | 1.00E-03      |
-| LR (Learning Rate)     | 5.00E-04  | 5.00E-04  | 5.00E-04  | 5.00E-04  | 5.00E-03      |
-| UPDATE_EVERY           | 4         | 4         | 4         | 4         | 16            |
-| eps_end                | 0.01      | 0.01      | 0.01      | 0.01      | 0.01          |
-| n_hidden_layers        | 2         | 2         | 2         | 2         | 2             |
-| fc1_units              | 256       | 256       | 256       | 128       | 128           |
-| fc2_units              | 128       | 128       | 128       | 128       | 128           |
-| N° of episodes to solve  | 537       | 503       | 611       | 545       | Not Solved    |
-| Average Score          | 13.04     | 13        | 13        | 13.02     | Not Solved    |
+| Parameter               | Experiment 1    |
+|-------------------------|-----------|
+| BUFFER_SIZE            | 100,00   | 
+| BATCH_SIZE             | 128        | 
+| GAMMA                  | 0.99      | 
+| TAU                    | 1.00E-03  | 
+| Actor Learning Rate     | 1.00E-04  | 
+| Critic Learning Rate          |1.00E-04  |       
+| n_hidden_layers        | 2         | 
+| fc1_units              | 128       | 
+| fc2_units              | 64       | 
 
 
 In the first three experiments, we used a neural network with an architecture of 37 (state_size) x 256 x 156 x 4 (action_size).
